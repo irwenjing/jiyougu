@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>绑定</title>
+</head>
+<body>
+	<div class='wrap'>
+		<button id='btn'>点我</button>
+		<button id='cancel' onclick='clickCancel()'>去掉</button>
+	</div>
+	<ul id='list'>
+		<li>111</li>
+		<li>222</li>
+		<li>333</li>
+	</ul>
+
+
+
+	<script type="text/javascript">
+		var cancel = document.querySelector('#cancel')
+		cancel.onclick = function(){
+			console.log('hahahaha')
+		}
+	</script>
+
+
+
+
+
+</body>
+</html>

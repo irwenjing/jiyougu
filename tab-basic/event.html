@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div class="box">
+		<button id="btn">click me</button>
+	</div>
+	
+	
+
+	<script type="text/javascript">
+		var button = document.querySelector('#btn');
+
+		var box = document.querySelector('.box');
+
+		btn.addEventListener('click', function(e){
+			console.log(this)
+			// console.log(this.id)
+			// console.log(this.setAttribute)
+			// console.log(this.getAttribute)
+			console.log(this.innerText)
+			// console.log(e)
+			console.log(e.target)
+		})
+
+
+
+		box.addEventListener('click', function(e){
+			console.log(this)
+			// console.log(this.id)
+			// console.log(this.setAttribute)
+			// console.log(this.getAttribute)
+			console.log(this.innerText)
+			// console.log(e)
+			console.log(e.target)  //target就是事件真实的促发点，即事件最终到达的这个元素；理解这个很重要，在事件代理中会用到。
+		})
+
+
+
+
+
+
+	</script>
+
+
+
+</body>
+</html>
