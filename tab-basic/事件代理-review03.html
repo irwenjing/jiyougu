@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件代理</title>
+	<style type="text/css">
+		.container{
+			margin: 30px auto;
+			width: 900px;
+			background: pink;
+		}
+		ul,li{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		.container li{
+			border: 1px solid #CCC;
+			line-height: 1.5;
+			margin-right: 30px;
+		}
+		#show{
+			background: red;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<ul>
+			<li>aa</li>
+			<li>bb</li>
+			<li>cc</li>
+			<li>dd</li>
+		</ul>
+		<input type="text" id="add-ipt"><button id='btn'>添加</button>
+		<div id='show'></div>
+	</div>
+
+	<script type="text/javascript">
+		var container = document.querySelector('.container ul');
+		var addIpt = document.querySelector('#add-ipt');
+		var addNode = document.querySelector('#btn');
+		var showNode = document.querySelector('#show');
+
+		container.addEventListener('click', function(e){
+			var target = e.target
+			if(target.tagName.toLowerCase() === 'li'){
+				showNode.innerText = target.innerText;
+			}
+		})
+
+		addNode.addEventListener('click', function(){
+			var node = document.createElement('li');
+			node.innerText = addIpt.value;
+			container.appendChild(node);
+		})
+	</script>
+
+
+
+</body>
+</html>
