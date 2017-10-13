@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>闭包</title>
+</head>
+<body>
+
+
+<script type="text/javascript">
+	// var fnArr =[];
+	// for(var i = 0; i < 10; i++){
+	// 	fnArr[i] = function(){
+	// 		return i;
+	// 	}
+	// }
+	// console.log(fnArr[3]()); //10；
+
+
+
+	var fnArr =[];
+	for(var i = 0; i < 2; i++){
+		fnArr[i] = function(){
+			return i;
+		}
+	}
+	console.log(fnArr[1]());  //2
+</script>
+	
+</body>
+</html>

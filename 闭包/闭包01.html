@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>闭包练习</title>
+</head>
+<body>
+
+<script type="text/javascript">
+
+var fnArr =[];
+for(var i = 0; i < 2; i++){
+	fnArr[i] = function(){
+		return i;
+	};
+}
+console.log(fnArr[1]() );
+
+/* 
+fnArr[0] = function fn1(){
+	return i
+}
+fnArr[1] = function fn2(){
+	return i
+}
+
+
+globalContext = {
+	Ao: {
+		i: 2; 
+		fnArr: [fn1, fn2]
+	},
+	scope: null
+}
+fn1.[[scope]] = globalContext.AO
+fn2.[[scope]] = globalContext.AO
+
+fn2Context = {
+	AO: {},
+	scope: fn2.[[scope]] //globalContext.Ao
+}
+
+
+
+
+
+
+**/
+
+
+//方法1
+ var fnArr = [];
+ for(var i = 0; i < 2; i++){
+ 	(function(i){
+ 		fnArr[i] = function(){
+ 			return i;
+ 		}
+ 	} )(i);
+ } 
+ console.log( fnArr[0]() );
+
+
+/* 
+
+//改写1
+var fnArr = [];
+
+(function(i){
+	fnArr[i] = function(){
+		return i;
+	}
+})(0)
+(function(i){
+	fnArr[i] = function(){
+		return i;
+	}
+})(1);
+console.log( fnArr[0]() );
+
+
+//改写2
+
+var fnArr = [];
+function fn1(i){
+	fnArr[i] = function fn11(){
+		return i;
+	}
+}
+
+function fn2(i){
+	fnArr[i] = function fn22(){
+		return i;
+	}
+}
+fn1(0);
+fn2(1);
+
+console.log( fnArr[0]() );
+
+
+**/
+
+/* 
+
+globalContext = {
+	AO: {
+		fnArr: [fn11, fn22]
+		fn1: function
+		fn2: function
+		i: 2
+	}
+}
+fn1.[[scope]] = globalContext.AO
+fn2.[[scope]] = globalContext.AO
+
+fn1Context = {
+	Ao: {
+		i: 0
+	},
+	scope: fn1.[[scope]] //globalContext.AO
+}
+
+fn11.[[scope]] = fn1Context.AO
+
+
+fn2Context = {
+	Ao: {
+		i: 1
+	},
+	scope: fn2.[[scope]] //globalContext.AO
+}
+
+fn22.[[scope]] = fn2Context.AO
+
+
+fn11Context = {
+	AO: {
+		
+	},
+	scope: fn11[[scope]] //fn1Context.AO
+}
+
+
+**/
+
+//方法3
+
+var fnArr = [];
+
+for(var i = 0; i < 2; i++){
+	fnArr[i] = (function(i){
+		return function(){
+			return i;
+		}
+	})(i);
+}
+console.log( fnArr[0]() );
+
+/*
+
+//改进1
+
+var fnArr = [];
+fnArr[0] = (function(i){
+	return function(){
+		return i;
+	}
+}) (0);
+
+fnArr[1] = (function(i){
+	return function(){
+		return i;
+	}
+})(1); 
+
+console.log(fnArr[0]());
+
+
+
+
+
+
+**/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+</script>
+	
+</body>
+</html>
