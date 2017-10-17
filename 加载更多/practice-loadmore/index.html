@@ -43,42 +43,17 @@
 	</style>
 </head>
 <body>
+
 	<ul id="ct">
 		
 	</ul>
-	<a  href="#" id="load-more" class="btn">加载更多</a>
 
-	<!--  阻止跳转顶部有两种方法: 
-	 1.a链接中的href='javascript:void(0)' 
-	 2.在btn.addEventListener('click', function(e){e.preventDefault()}; function(e)加个e,大括号添加{e.preventDefault()},取消默认事件。 -->
-
+	<a href="#" id="load-more" class="btn">加载更多</a>
 
 	<script type="text/javascript">
-
-
-	//四步骤：
-	// 1.添加一个事件监听
-	// 2.new 一个对象，即var xhr = new XMLHttpRequest()
-	// 3.xhr.onreadystatechange=function(){}
-	// 4. xhr.open() 配置参数
-	// 5.xhr.send()  发送数据
-
-
-
-	//约定：
-	// 1.GET
-	// 2./loadMore 接口
-	// 3.{
-	// 	index: 0
-	// 	length: 5
-	// }
-	// 4.['news1','news2'...'news5']
-
-
-		
-		var btn =document.querySelector('#load-more')
 		var ct = document.querySelector('#ct')
-		var pageIndex = 0 //记录下标
+		var btn = document.querySelector('#load-more')
+		var pageIndex = 0
 
 		btn.addEventListener('click', function(e){
 
@@ -86,44 +61,30 @@
 
 			var xhr = new XMLHttpRequest()
 			xhr.onreadystatechange = function(){
-				if(xhr.readyState === 4 &&(xhr.status === 200 || xhr.status === 304)){
+				if(xhr.readyState===4 && (xhr.status===200 || xhr.status ===304)){
 					var results = JSON.parse(xhr.responseText)
-					console.log(results) 
-
-					/*
-					结果有了之后，我们开始拼接html
-					这时拼接html有很多方法,可以定义一个空数组，然后进行遍历这个数组(results),然后把里面的每一项push到空数组里面，最后用join把它拼接成字符串;2，也可以定义一个空字符串，然后遍历，拼装html
-
-					**/
-
-					// var html = ''
+					console.log(results)
 
 					var fragment = document.createDocumentFragment()
 					for(var i = 0; i < results.length; i++){
-
-						// html += '<li>' + results[i] + '</li>'
-
-						var node = document.createElement('li')
+						var node = document.createElement('li');
 						node.innerText = results[i]
 						fragment.appendChild(node)
 					}
 					ct.appendChild(fragment)
-
 					pageIndex = pageIndex + 5
-					// ct.innerHTML = html
-
 
 				}
 			}
+
 			xhr.open('get', '/loadMore?index='+pageIndex+'&length=5', true)
 			xhr.send()
+
 		})
 
 
 
 	</script>
-
-
-
+	
 </body>
 </html>
