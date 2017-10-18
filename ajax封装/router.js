@@ -1,10 +1,6 @@
-function setRouter(app){ 
- var router = app; 
-
 //服务端 router.js
 
 //模拟延迟5秒
-
 
 app.get('/loadMore', function(req, res){
 
@@ -21,5 +17,4 @@ app.get('/loadMore', function(req, res){
 	}, 5000)
 	
 
-});}
- module.exports.setRouter = setRouter
+});
