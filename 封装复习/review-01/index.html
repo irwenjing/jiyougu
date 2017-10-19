@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>封装</title>
-	<style type="text/css">
+		<style type="text/css">
 		ul,li{
 			margin: 0;
 			padding: 0;
@@ -49,7 +49,11 @@
 	</ul>
 	<a href="#" id="load-more" class="btn">加载更多</a>
 
+	
+
 	<script type="text/javascript">
+
+
 	/**
 		1. 写页面
 		1.1 按钮和新闻内容显示，元素定义
@@ -71,6 +75,7 @@
 
 		var isDataArrive = true
 
+
 		btn.addEventListener('click', function(e){
 
 			e.preventDefault()
@@ -79,9 +84,9 @@
 				return;
 			}
 
-			//数据没来，就什么都不做；数据到来了，就操作下面：
 
 			loadData(function(news){
+
 				renderPage(news)
 
 				pageIndex = pageIndex + 5
@@ -90,8 +95,6 @@
 			isDataArrive = false
 
 
-			// renderPage()
-
 
 		})
 
@@ -99,8 +102,8 @@
 
 		function loadData(callback){
 
-
 			ajax({
+
 				type: 'get',
 				url: '/loadMore',
 				data: {
@@ -111,73 +114,51 @@
 				onError: function(){
 					console.log('error')
 				}
+
 			})
-
-			/*
-
-			var xhr = new XMLHttpRequest()
-			xhr.onreadystatechange = function(){
-				if(xhr.readyState===4){
-					if(xhr.status===200 || xhr.status ===304){
-						var results = JSON.parse(xhr.responseText)
-						// console.log(results)
-
-						callback(results)
-						// renderPage(results)
-
-						pageIndex = pageIndex + 5
-					}else{
-						console.log('出错了')
-					}
-					isDataArrive = true
-				}
-			}
-			xhr.open('get', '/loadMore?index='+pageIndex+'&length=5', true)
-			xhr.send()
-			*/
-
 		}
+
 
 
 		function renderPage(news){
+
 			var fragment = document.createDocumentFragment()
+
 			for(var i = 0; i<news.length; i++){
 				var node = document.createElement('li')
 				node.innerText = news[i]
-				fragment.appendChild( node)
+				fragment.appendChild(node)
 			}
 			ct.appendChild(fragment)
+
+
 		}
+
+
 
 
 		function ajax(options){
 
 			var xhr = new XMLHttpRequest()
 			xhr.onreadystatechange = function(){
+
 				if(xhr.readyState===4){
-					if(xhr.status===200 || xhr.status ===304){
+					if(xhr.status===200 || xhr.status===304){
 						var results = JSON.parse(xhr.responseText)
-						// console.log(results)
-
-						// renderPage(results)
-
 						options.onSuccess(results)
-
-						// pageIndex = pageIndex + 5
 					}else{
-						// console.log('出错了')
 						options.onError()
 					}
 				}
 			}
 
 			var query = '?'
+
 			for(key in options.data){
-				query += key + '=' + options.data[key] + '&'
-				console.log(query)  //1. ?index=0& 2. ?index=0&length=5&
+				query = query + key + '=' + options.data[key] + '&'
 			}
+
 			query = query.substr(0, query.length-1)
-			console.log(query)  //?index=0&length=5
 
 
 			xhr.open(options.type, options.url + query, true)
@@ -186,7 +167,11 @@
 		}
 
 
+
+		
 	</script>
+
+
 	
 </body>
 </html>

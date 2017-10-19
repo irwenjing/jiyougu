@@ -43,7 +43,7 @@
 	</style>
 </head>
 <body>
-	
+
 	<ul id="ct">
 		
 	</ul>
@@ -51,8 +51,24 @@
 
 	<script type="text/javascript">
 		
-		var ct = document.querySelector('#ct')
+		/**
+		1. 写页面
+		1.1 按钮和新闻内容显示，元素定义
+
+		2 添加事件
+		2.1 获取btn和文本区域
+		2.2 btn添加事件
+
+		3. 请求ajax
+		3.1 获取数据
+		3.2 渲染页面
+		
+		4. 封装ajax
+	*/
+
+
 		var btn = document.querySelector('#load-more')
+		var ct = document.querySelector('#ct')
 		var pageIndex = 0
 
 		var isDataArrive = true
@@ -72,11 +88,15 @@
 				isDataArrive = true
 			})
 			isDataArrive = false
+
+
 		})
+
 
 		function loadData(callback){
 
 			ajax({
+
 				type: 'get',
 				url: '/loadMore',
 				data: {
@@ -88,42 +108,59 @@
 					console.log('error')
 				}
 			})
+
+
 		}
 
+
 		function renderPage(news){
+
 			var fragment = document.createDocumentFragment()
-			for(var i = 0; i<news.length; i++){
+
+			for(var i=0; i<news.length; i++){
 				var node = document.createElement('li')
 				node.innerText = news[i]
 				fragment.appendChild(node)
 			}
 			ct.appendChild(fragment)
+
+
 		}
 
+
+
 		function ajax(options){
+
 			var xhr = new XMLHttpRequest()
 			xhr.onreadystatechange = function(){
 				if(xhr.readyState===4){
 					if(xhr.status===200 || xhr.status===304){
 						var results = JSON.parse(xhr.responseText)
-
 						options.onSuccess(results)
-					}else{
-						options.onError()
 					}
+					options.onError()
 				}
 			}
 
+
 			var query = '?'
+
 			for(key in options.data){
-				query += key + '=' + options.data[key] + '&'
+
+				query = query + key + '=' + options.data[key] + '&'
+				console.log(query)
 			}
+
 			query = query.substr(0, query.length-1)
-			xhr.open(options.type, options.url + query, true)
+			console.log(query)
+
+			xhr.open(options.type, options.url+query, true)
 			xhr.send()
+
 		}
 
-	</script>
 
+	</script>
+	
 </body>
 </html>
