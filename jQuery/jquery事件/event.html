@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jquery事件</title>
+	<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+</head>
+<body>
+	<div class="box">
+		<ul>
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+		</ul>
+	</div>
+	<input id="ipt" type='text'>
+	<button id="btn">添加</button>
+	<div id="wrap"></div>
+
+	<script type="text/javascript">
+
+	/*
+	1.先选中.box>ul>li： $('.box>ul>li').on('click', function(){})
+	1.1 .当点击的时候让wrap去展示里面的文字
+	1.2获取要点击的东西(记住要把原生DOM换成jquery对象) 即var str = $(this).text()得到里面的值。
+	1.3把得到的值放到wrap里面 $('#wrap').text(str)
+
+	2.当我点击添加的时候把input里面的东西给添加到ul里面作为最后的一个元素 $('#btn').on('click', function(){})
+	2.1 当点击添加时，获取input里面的值var value = $('#ipt').val()
+	2.2 获取之后把这个值创建一个新的元素，放到ul里面。$('.box>ul').append('<li>'+value+'</li>')
+
+	3.如何让新添加的元素也有事件？这时要用事件代理。
+	3.1 把$('.box>ul>li').on('click', function(){
+		var str =  $(this).text()
+		$('#wrap').text(str)})
+	})换成$('.box>ul').on('click', 'li', function(){
+		console.log(this) //验证this代表什么
+		var str =  $(this).text()
+		$('#wrap').text(str)}) 这时不是选中li，而是选中ul,我们把事件绑定到父容器上，当ul里面你所点击的是li
+
+
+
+	**/
+
+
+	// $('.box>ul>li').on('click', function(){
+	// 	var str =  $(this).text()
+	// 	$('#wrap').text(str)
+	// })
+
+	$('.box>ul').on('click', 'li', {name: 'ruoyu'}, function(e){
+		console.log(e.data)
+		//e.stopPropagation() //停止事件冒泡
+		//e.preventDefault() //阻止默认事件
+		console.log('haha')
+	})
+
+	//.trigger触发事件
+
+	$('li').eq(2)
+	$('li').eq(2).trigger('click')  //可以用js去模拟点击这么一个操作
+
+
+
+	$('.box>ul').on('click', 'li', function(){
+		console.log(this) //验证this代表什么
+		var str = $(this).text()
+		$('#wrap').text(str)
+	})
+	$('#btn').on('click', function(){
+		var value = $('#ipt').val()
+		$('.box>ul').append('<li>'+value+'</li>')
+
+	})
+
+/*
+
+	$('.box>ul').off('click.hello')  //命名空间是便于解绑事件，即click加上.hello是便于解绑事件，把上面d的添加.hello
+	$('.box>ul').on('click.hello', 'li', function(){
+		console.log(this) //验证this代表什么
+		var str = $(this).text()
+		$('#wrap').text(str)
+	})
+
+	**/
+
+
+
+
+
+
+	/*
+		//普通事件绑定， 最简单的用法
+		$('div').on('click', function(e){
+			console.log(this);
+			console.log(e);
+
+		});
+
+		//事件委托或者事件代理，想让div下面所有的span绑定事件，可以把事件绑定到div上
+		$('div').on('click', 'span', function(e){
+			console.log(this);
+			console.log(e);
+		});
+
+		//可以在绑定的时候给事件处理程序传递一些参数
+		$('div').on('click', {name: 'Byron', age: 24}, function(e){
+			console.log(e.data);
+		});
+
+		**/
+
+
+	</script>
+	
+</body>
+</html>

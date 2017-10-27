@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jquery属性操作</title>
+	<style type="text/css">
+		.active{
+			background-color: pink;
+		}
+	</style>
+	<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+</head>
+<body>
+	<input id='ipt1' type="text" value='hello' sex = 男>
+
+	<!-- 在box里面所有的li做一次重复，把1变成11，2变成22... -->
+	<div class="box">
+		<ul>
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+		</ul>
+
+	</div>
+	<button id="btn">变色</button>
+	
+
+	<script type="text/javascript">
+		console.log($('#ipt1').val())
+
+		var $box = $('.box')
+		var $btn = $('#btn')
+
+
+		$box.css({height: '30px', 'border': '1px solid red'})
+
+		$btn.on('click', function(){
+			$box.toggleClass('active')
+		})   //toggle的实现
+
+
+
+
+
+		/*
+
+		1.先去选中这些元素
+		2. 用.each(function(){})去遍历  (如果不知道function()里面的参数是什么,可以用console.log(arguments)来做个测试看一下这个参数有哪些。从控制台可以看出，第一个参数是下标index,0，1，2，3;第二个参数是对应的元素node,node是原生Dom，要用jquery方法的话，要用$符号对它进行包装)
+
+
+
+		**/
+
+
+
+		$('.box>ul>li').each(function(index, node){
+
+
+			/*
+			node.innerText = node.innerText + node.innerText //可以用原生DOM的方法实现我们的效果，为了保持统一，如果我们使用了，jquery，就不要再用原生Dom。
+			**/
+
+			/*
+
+			//方法一：获取里面的值用加号拼接,然后再去设置。
+
+			//把原生DOM转化成jquery对象。
+			//$(node).text($(node).text() + $(node).text())  
+
+
+			//优化(好一点的方法)
+			var str = $(node).text()
+			$(node).text(str + str)
+
+			**/
+
+
+			/*
+			方法二：因为this代表它第二个参数node,我们可以使用方法二
+
+			1.把this获取出来，
+			2.然后设置里面的参数
+
+			**/
+
+			console.log(this)  //this代表它第二个参数node
+
+			var str = $(this).text()
+			$(this).text(str + str)
+
+
+
+			console.log(arguments)
+
+
+
+
+		})
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		/*
+		原生js对象 var box = document.querySelector('.box')
+		box.style.backgroundColor = 'blue'
+		**/
+
+	/*	
+		//jquery 常见方法 以下这几个一定要记住
+
+		//括号里面不添加东西就是获取，添加东西就是设置
+		$node.append()
+		$node.prepend()
+		$node.remove()
+		$node.before()  $node.after()
+		$node.html()
+		$node.text()
+		$node.empty()
+
+
+		//属性
+		$input.val()
+		$box.attr('id') //这是获取id
+		$box.attr('id','class')//这是设置
+		$box.css() //同理传递一个参数是获取， 传递两个参数是设置，如果传递的是对象，那么是批量获取 ，注意它获取的是计算后的属性。
+
+		$box.addClass()
+		$box.removeClass()
+		$box.toggleClass( )
+
+
+
+
+		**/
+
+
+	</script>
+	
+</body>
+</html>

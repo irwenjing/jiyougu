@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>map方法</title>
+	<style type="text/css">
+		.active{
+			background-color: pink;
+		}
+	</style>
+	<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+</head>
+<body>
+	<input id='ipt1' type="text" value='hello' sex = 男>
+
+	<!-- 在box里面所有的li做一次重复，把1变成11，2变成22... -->
+	<div class="box">
+		<ul>
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+		</ul>
+
+	</div>
+	<button id="btn">变色</button>
+	
+
+	<script type="text/javascript">
+		console.log($('#ipt1').val())
+
+		var $box = $('.box')
+		var $btn = $('#btn')
+
+
+		var arr = $('.box>ul>li').map(function(){
+			return $(this).text()
+		})
+		console.log(arr)
+
+		//用map方法，就不需要像each方法那样进行每一个的遍历然后定义一个数组然后把得到的数据push到数组里面等。
+
+
+
+
+		//$.extend
+
+		var obj1 = {a:1}
+		var obj2 = {b:2, c:3}
+		var obj3 = {b:3, d:5}
+		var obj4 = {}
+
+		//使用方法1，它会把obj2扩展到obj1上(换句话说，它会做一个遍历，如果obj1里面有的属性，那么obj2里面会进行一次覆盖；如果obj2里面有的属性obj1里面没有，那它会做一次新增)
+		$.extend(obj1, obj2)  //结果：obj1 =={a:1, b:2, c:3},obj2里面的东西，obj1里面都没有，那么就扩展到obj1上。
+
+		$extend(obj1, obj2, obj3) //{a:1, b:3, c:3, d:5}
+
+
+		//想到的{a:1, b:3, c:3, d:5}这个结果，而不想改变obj1，可以var obj4 = {}
+
+		$.extend(obj4, obj1, obj2, obj3) //把结果扩展到obj4，obj4变成{a:1, b:3, c:3, d:5} ，而obj1不变。
+
+		var obj5 = $.extend({}, obj1, obj2, obj3) //和上面一个同理
+
+
+		
+
+		
+
+
+	</script>
+	
+</body>
+</html>

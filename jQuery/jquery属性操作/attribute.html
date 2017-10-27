@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jquery属性操作</title>
+	<style type="text/css">
+		.active{
+			background-color: pink;
+		}
+	</style>
+	<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+</head>
+<body>
+	<input id='ipt1' type="text" value='hello' sex = 男>
+	<div class="box"></div>
+	<button id="btn">变色</button>
+	
+
+	<script type="text/javascript">
+		console.log($('#ipt1').val())
+
+		var $box = $('.box')
+		var $btn = $('#btn')
+
+
+		$box.css({height: '30px', 'border': '1px solid red'})
+
+		$btn.on('click', function(){
+			$box.toggleClass('active')
+		})   //toggle的实现
+
+
+		/*
+		原生js对象 var box = document.querySelector('.box')
+		box.style.backgroundColor = 'blue'
+		**/
+
+
+		//jquery 常见方法 以下这几个一定要记住
+
+		//括号里面不添加东西就是获取，添加东西就是设置
+		$node.append()
+		$node.prepend()
+		$node.remove()
+		$node.before()  $node.after()
+		$node.html()
+		$node.text()
+		$node.empty()
+
+
+		//属性
+		$input.val()
+		$box.attr('id') //这是获取id
+		$box.attr('id','class')//这是设置
+		$box.css() //同理传递一个参数是获取， 传递两个参数是设置，如果传递的是对象，那么是批量获取 ，注意它获取的是计算后的属性。
+
+		$box.addClass()
+		$box.removeClass()
+		$box.toggleClass( )
+
+
+	</script>
+	
+</body>
+</html>
