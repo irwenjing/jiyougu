@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自定义动画</title>
+	<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.js"></script>
+</head>
+<body>
+
+	<button id="btn14">变宽</button>
+	<button id="btn15">复原</button>
+	<button id="btn16">变宽变大移动</button>
+	<button id="btn17">多个动画</button>
+	<button id="btn18">finish</button>
+	<button id="btn19">stop</button>
+
+	<div class="div3" style="width:80px;height:80px;background-color:red;position:relative;"></div>
+
+	<script type="text/javascript">
+		$(function(){
+			var $div3 = $('.div3');
+			$('#btn14').on('click', function(e){
+				$div3.animate({width: '200px'});
+			});
+			$('#btn15').on('click', function(){
+				$div3.animate({
+					width: '80px',
+					height: '80px',
+					left: '0px',
+					top: '0px',
+					opacity: 1
+				}, 500);
+			});
+			$('#btn16').on('click', function(){
+				$div3.animate({
+					width: '150px',
+					height: '150px',
+					left: '100px',
+					top: '100px',
+					opacity: 0.5
+				}, 500, function(){
+
+				});
+			});
+
+			var clickable = true;
+			$('#btn17').on('click', function(){
+
+				// $div3.animate({}, function(){
+				// 	$div3.animate({}, function(){
+				// 		$div3.animate({}, function(){
+
+				// 		})
+				// 	})
+				// })   ///这种写法太麻烦
+
+				/*
+				优化：
+				1. 声明一个数组，
+				2.把数据都放到数组里
+				3，去遍历这个数组
+			**/
+
+				var actions = [
+					{width: 80, height: 80, left: 0, top: 0},
+					{width: '150px', height:'150px'},
+					{left:'200px'},
+					{top: '200px'},
+					{left: '0px'},
+					{top: '0px'},
+					{width: '80px', height: '80px'}
+
+
+				]
+
+				actions.forEach(function(action, idx){
+					// console.log(arguments)  //检擦数据正确不？
+					// console.log(action)
+					$div3.animate(action, 2000)
+				})
+
+
+		/*	
+
+				//未优化前的写法：	
+
+				// if(!clickable){
+				// 	return;
+				// }
+				// clickable =false;
+				// $div3.finish()
+				// $div3.stop(true, true);
+				$div3.animate({width: 80, height: 80, left: 0, top: 0});
+				// $div3.stop(true, true);
+				$div3.animate({width: '150px', height:'150px'})   //jquery的链式调用
+					 .animate({left:'200px'})
+				  	 .animate({top:'200px'});
+
+				$div3.animate({left:'0px'});
+				$div3.animate({top:'0px'});
+				$div3.animate({width:'80px', height:'80px'}, function(){
+					// clickable = true;
+				});
+
+				**/
+
+			});
+
+
+
+			$('#btn18').on('click', function(){
+				$div3.finish()   //结束动画队列并返回原点
+			})
+				$('#btn19').on('click', function(){
+					// console.log('stop')
+					$div3.stop(true, true )	  //停止动画队列
+				})
+			
+
+		})
+	</script>
+	
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jquery动画效果</title>
+	<style type="text/css">
+		.box{
+			width: 200px;
+			height: 200px;
+			background-color: red;
+		}
+	</style>
+	<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.js"></script>
+</head>
+<body>
+	<div class="box">hello</div>
+	<button id="btn-box1">show</button>
+	<button id="btn-box2">hide</button>
+
+	<script type="text/javascript">
+
+	//可以记住原来的display的属性
+
+	//1.隐藏、显示
+	//2.淡入、淡出
+	//3.slideDown(向下滑动显示)、slideUp(向上滑动隐藏)
+		$("#btn-box1").on('click', function(){
+			//$(".box").show(5000)
+			// $('.box').fadeIn(6000)
+			$('.box').slideDown()
+		})
+		$('#btn-box2').on('click', function(){
+			//$('.box').hide(5000)
+			// $('.box').fadeOut(6000)
+			$('.box').slideUp('slow')
+		})
+	</script>
+	
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>百叶窗效果</title>
+	<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.js"></script>
+	<style type="text/css">
+		li{
+			list-style: none;
+		}
+		.ct>ul>li{
+			border: 1px solid #ccc;
+		}
+		.ct>ul>li>p{
+			display: none;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="ct">
+		<ul>
+			<li class="item">
+				<h3>标题1</h3>
+				<p>内容1</p>
+			</li>
+			<li class="item">
+				<h3>标题2</h3>
+				<p>内容2</p>
+			</li>
+			<li class="item">
+				<h3>标题3</h3>
+				<p>内容3</p>
+			</li>
+			<li class="item">
+				<h3>标题4</h3>
+				<p>内容4</p>
+			</li>
+		</ul>
+	</div>
+
+
+	<script type="text/javascript">
+		// $('.ct .item').on('click', function(){
+		// 	$(this).find('p').slideToggle(100);
+		// });  //实现切换
+
+		// $('.ct .item').on('mouseover', function(){
+		// 	$(this).find('p').slideDown(100);
+		// })
+
+		// $('.ct .item').on('mouseleave', function(){
+		// 	$(this).find('p').slideUp(100);
+		// })
+
+		/*
+		实现效果1：当我点击标题1时它会展开，当我点击标题2时：标题2展开，标题1(它的兄弟节点)会收拢。(如何做？)
+		**/
+		$('.ct .item').on('click', function(){
+			$(this).find('p').slideDown();
+			$(this).siblings().find('p').slideUp()
+		})
+	</script>
+	
+</body>
+</html>
