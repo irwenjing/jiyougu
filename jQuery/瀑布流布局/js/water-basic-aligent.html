@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		.content{
+			position: relative;
+		}
+
+		.item{
+			position: absolute;
+			width: 200px;
+			margin-right: 10px;
+			margin-top: 10px;
+			transition: all 1s;
+		}
+
+		.h1{
+			height: 200px;
+			background-color: #f4b300;
+		}
+
+		.h2{
+			height: 300px;
+			background-color: #691BB8;
+		}
+
+		.h3{
+			height: 400px;
+			background-color: #006ac1;
+		}
+
+	</style>
+	<script src='http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js'></script>
+
+	<script type='text/javascript'>
+		// $(function(){
+
+		/*	function render(){
+
+				var nodeWidth = $('.item').outerWidth(true),
+				colNum = parseInt($(window).width()/nodeWidth),
+				colSumHeight = [];
+
+				for(var i = 0; i<colNum; i++){
+					colSumHeight.push(0);
+				}
+
+				$('.item').each(function(){
+					var $cur = $(this);
+
+					//colSumHeight = [100, 250, 80, 200]
+
+					var idx = 0,
+					 minSumheight = colSumHeight[0];
+
+					 for(var i=0; i<colSumHeight.length; i++){
+					 	if(colSumHeight[i] < minSumHeight){
+					 		idx = i;
+					 		minSumHeight = colSumHeight[i]
+					 	}
+					 }
+
+					 $cur.css({
+					 	left: nodeWidth*idx,
+					 	top: minSumHeight
+					 });
+					 colSumHeight[idx] = $cur.outerHeight(true) + colSumHeight[idx];
+				});
+
+			}
+
+			render();
+
+			$(window).on('resize', function(){
+				render();
+			})
+
+
+
+			//方法2， 通过闭包进行私有化封装
+
+
+			var water = (function($){
+				function render(){
+
+					var nodeWidth = $('.item').outerWidth(true),
+					colNum = parseInt($(window).width()/nodeWidth),
+					colSumHeight = []
+
+					for(var i = 0; i<colNum; i++){
+						colSumHeight.push(0);
+					}
+
+					$('.item').each(function(){
+						var $cur = $(this);
+
+						//colSumHeight = [100, 250, 80, 200]
+
+						var idx = 0,
+							minSumHeight = colSumHeight[0];
+
+							for(var i=0; i<colSumHeight.length; i++){
+								if(colSumHeight[i] < minSumHeight){
+									idx = i;
+									minSumHeight = colSumHeight[i];
+								}
+							}
+
+							$cur.css({
+								left: nodeWidth*idx,
+								top: minSumHeight
+							});
+							colSumHeight[idx] = $cur.outerHeight(true) + colSumHeight[idx];
+					});
+				}
+			})
+		})  
+
+		**/
+	</script>
+</head>
+<body>
+
+
+
+<!-- 宽度相等，高度随机 -->
+
+
+<!-- 1.先创建数组，数组存储的是每一列的高度之和，容器宽度除以卡片的宽度取整数得到数组的个数。一开始数组里面的高度都是0 .开始放置的过程中，先从数组里面找到一个最小值，找到之后得到它的下标，然后再把这个元素放到对应的值上，放置对城中，这个元素的水平位置就是它的一个下标乘以这个元素的宽度，而它的垂直位置呢就是这个数组以前的高度，把它放置好之后我再把当前这个位置上这个值加上当前高度，那么这个数组就更新了，下次再有图片的时候遵循同样的逻辑，然后把所有的div循环一遍就放好了。
+ -->
+
+
+
+ 
+	
+	<div class="content">
+		<div class="item h1">1</div>
+		<div class="item h3">2</div>
+		<div class="item h2">3</div>
+		<div class="item h1">4</div>
+		<div class="item h1">5</div>
+		<div class="item h3">6</div>
+		<div class="item h3">7</div>
+		<div class="item h2">8</div>
+		<div class="item h1">9</div>
+		<div class="item h3">10</div>
+		<div class="item h3">11</div>
+		<div class="item h3">12</div>
+		<div class="item h2">13</div>
+		<div class="item h2">14</div>
+	</div>
+
+	<script>
+
+
+		//窗口发生改变时，实现变动  是transition: all 1s 当窗口发生改变让它实现渐变。
+/*
+		waterfull()
+		$(window).resize(function(){
+			waterfull()
+		})
+
+	function waterfull(){
+
+		var colLength = parseInt($('.content').width()/$('.item').width())  //列数
+		var itemArr = []
+		for(var i = 0; i<colLength; i++){
+			itemArr[i] = 0
+		}  //初始化
+
+		$('.item').each(function(){
+
+			// 从数组中找到最小值及其下标（1.可以把数组先从小到大进行排序，那么第一个就是最小值；2.可以用Math.min.apply()这个方法得到最小值）
+			//得到最小值后如何得到它的下标（1.可以进行for循环，只要里面某个值等于它这个最小值就可以得到它的下标；2，或者用数组的.indexOf()方法）
+			var minValue = Math.min.apply(null, itemArr)
+			var minIndex = itemArr.indexOf(minValue)
+
+			//得到最小值和下标之后就可以把item固定到位置上，item就是下面的$('.this')
+			$(this).css({
+				top: itemArr[minIndex],
+				left: $(this).outerWidth(true)*minIndex
+
+				//outerWidth(true)是包括边框外边距；不加true的话只包括边框；如果只写width是content；如果是width(true)的话是加边框；
+			})
+
+			//这一列数组的高度发生变化
+			itemArr[minIndex] += $(this).outerHeight(true)  
+		})
+
+	}
+
+	**/
+
+
+
+
+	//让代码更优化，优雅
+
+	//当我们执行下面这段代码时整体的功能并没有去执行，我们可以在后面用WaterFall.init()去启动；(或者在控制台用WaterFall.init()去启动)
+
+	// 当下面代码执行的时候实际上执行的是var WaterFall =等于号后面的这段函数代码，执行这段函数代码，把它的返回值赋值给WaterFall,而这个函数呢返回值就是return{init: init},换句话说，WaterFall执行完成之后就是这么一个对象return{init: init}，我们就可以在后面用WaterFall.init()去启动；
+
+	// return{init: init}中这个init会往上找，找到function init(){}然后执行里面的waterfull()和$(window).resize(function(){waterfull() })
+				
+	var WaterFall = (function(){
+
+		function init(){
+			waterfull()
+			$(window).resize(function(){
+				waterfull()
+			})
+		}
+
+
+
+
+		function waterfull(){
+
+		var colLength = parseInt($('.content').width()/$('.item').width())  //列数
+		var itemArr = []
+		for(var i = 0; i<colLength; i++){
+			itemArr[i] = 0
+		}  //初始化
+
+		$('.item').each(function(){
+
+			// 从数组中找到最小值及其下标（1.可以把数组先从小到大进行排序，那么第一个就是最小值；2.可以用Math.min.apply()这个方法得到最小值）
+			//得到最小值后如何得到它的下标（1.可以进行for循环，只要里面某个值等于它这个最小值就可以得到它的下标；2，或者用数组的.indexOf()方法）
+			var minValue = Math.min.apply(null, itemArr)
+			var minIndex = itemArr.indexOf(minValue)
+
+			//得到最小值和下标之后就可以把item固定到位置上，item就是下面的$('.this')
+			$(this).css({
+				top: itemArr[minIndex],
+				left: $(this).outerWidth(true)*minIndex
+
+				//outerWidth(true)是包括边框外边距；不加true的话只包括边框；如果只写width是content；如果是width(true)的话是加边框；
+			})
+
+			//这一列数组的高度发生变化
+			itemArr[minIndex] += $(this).outerHeight(true)  
+		})
+
+	}
+
+
+
+
+		return {
+			init: init
+		}
+	})()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+	</script>
+	
+</body>
+</html>

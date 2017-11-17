@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name='description' content='tab切换 原生js'>
+	<meta charset="UTF-8">
+	<title>tab 切换</title>
+	<style>
+		.mod-tab {
+			border: 1px solid #ccc;
+			margin-top: 30px;
+		}
+		.mod-tab * {
+			box-sizing: border-box;
+		}
+		.mod-tab ul,
+		.mod-tab li {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		.mod-tab .tabs:after　{
+			content: '';
+			height: 0;
+			display: table;
+			clear: both;
+		}
+		.mod-tab .tabs li{
+			float: left;
+			width: 33.3%;
+			height: 30px;
+			line-height: 30px;
+			text-align: center;
+			border-right: 1px solid #ccc;
+			border-bottom: 1px solid #ccc;
+			cursor: pointer;
+		}
+		.mod-tab .tabs li:last-child {
+			border-right: none;
+		}
+		.mod-tab .tabs .active {
+			background: #eee;
+		}
+    .mod-tab .wrap {
+      position: relative;
+      height: 180px;
+      overflow: hidden;
+    }
+		.mod-tab .panels{
+      position: absolute;
+      top: -40px;
+      width: 100%;
+		}
+		.mod-tab .panels>li{
+			height: 180px;
+			padding: 20px;
+		}
+		.mod-tab .panels>li:nth-child(1) {
+			
+			background-color: red;
+		}
+		.mod-tab .panels>li:nth-child(2) {
+			
+			background-color: green;
+		}
+		.mod-tab .panels>li:nth-child(3) {
+			
+			background-color: blue;
+		}
+		.mod-tab .active {
+			display: block;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="mod-tab">
+
+		<ul class="tabs">
+			<li class="active">tab1</li>
+			<li>tab2</li>
+			<li>tab3</li>
+		</ul>
+
+		<div class="wrap">
+      <ul class='panels'>
+        <li>content 1</li>
+        <li>content 2</li>
+        <li>content 3</li>
+      </ul>  
+    </div>
+    
+	</div>
+
+
+
+	<!-- <div class="mod-tab">
+		<ul class="tabs">
+			<li class="active">tab1</li>
+			<li>tab2</li>
+			<li>tab3</li>
+		</ul>
+		<div class="panel active">内容1</div>
+		<div class="panel">内容2</div>
+		<div class="panel">内容3</div>
+	</div>
+
+
+
+	<div class="mod-tab">
+		<ul class="tabs">
+			<li class="active">tab1</li>
+			<li>tab2</li>
+			<li>tab3</li>
+		</ul>
+		<div class="panel active">内容1</div>
+		<div class="panel">内容2</div>
+		<div class="panel">内容3</div>
+	</div>
+
+ -->
+	<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.js"></script>
+
+	<script type="text/javascript">
+
+	/*
+		实现上下滑动
+
+		1.先改装css
+
+
+
+	 **/
+
+
+
+
+	/*
+	1.选中$('.tabs>li')
+	2.添加事件$('.tabs>li').on('click', function(){})
+	3.$('.tabs>li').on('click', function(){
+		var $this = $(this)  //命名当前点中的元素(要知道当前点中的是哪个元素)(相当于dom的缓存 jquery对象的缓存)
+	})
+	4.需要得到当前点击元素的下标 var index = $this.index()
+	5.$this.addClass('active') 点击当前元素的时候让它的颜色变成灰色;同时让它的邻居.siblings()removeClass('active')颜色消除. 
+	6.给对应的panel展示出来,同时让它的邻居去掉    $('.panel').eq(index).addClass('active').siblings().removeClass('active')
+
+	**/
+
+	$('.tabs>li').on('click', function(){
+		var $this = $(this)
+		var index = $this.index()
+    var panelHeight = $('.mod-tab .wrap').height()
+    console.log(index)
+		$this.addClass('active').siblings().removeClass('active')
+		$this.parents('.mod-tab')
+			 .find('.panels')
+       .animate({top: -panelHeight*index})
+	})
+
+
+
+
+	/*
+		
+		$('.tabs li').on('click', function(){
+			var $cur = $(this);
+			var idx = $cur.index();
+			$cur.siblings().removeClass('active');
+			$cur.addClass('active');
+
+			$cur.parents('.mod-tab').find('.panel').removeClass('active');
+			$cur.parents('.mod-tab').find('.panel').eq(idx).addClass('active');
+		});
+
+		**/
+
+	</script>
+	
+</body>
+</html>
