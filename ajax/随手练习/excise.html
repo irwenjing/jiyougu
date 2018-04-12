@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>写一个ajax</title>
+</head>
+<body>
+	
+
+	<script type="text/javascript">
+		var xhr = new XMLHttpRequest()
+		xhr.open('GET', 'http://api.jirengu.com/weather.php', true)
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState === 4){
+				if((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304){
+					//成功了
+					console.log(xhr.responseText)
+				}else{
+					console.log('服务器异常')
+				}
+			}
+		}
+		xhr.onerror = function(){
+			console.log('服务器异常')
+		}
+		xhr.send()
+
+
+
+		//换种写法
+
+		var xhr = new XMLHttpRequest()
+		xhr.open('GET', 'http://api.jirengu.com/weather.php', true)
+		xhr.onload = function(){
+			if((xhr.status >= 200 && xhr.status < 300) || xhr.status ==304){
+				//成功了
+				console.log('服务器异常')
+			}
+		}
+		xhr.onerror = funciton(){
+			console.log('服务器异常')
+		}
+		xhr.send();
+
+
+	</script>
+</body>
+</html>

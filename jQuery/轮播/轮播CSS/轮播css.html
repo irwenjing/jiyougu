@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>无线轮播</title>
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+	<style type="text/css">
+		
+		.carousel{
+			position: relative;
+			width: 320px;
+			height: 180px;
+			overflow: hidden;
+		}
+		.carousel ul,
+		.carousel li{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		.carousel .img-ct{
+			position: absolute;
+			/*width: 1280px;*/  /*这个宽度不能固定，要让js去计算*/
+			overflow: hidden;
+		}
+		.carousel .img-ct>li{
+			float: left;
+		}
+		.carousel .img-ct img{
+			width: 320px;
+			height: 180px;
+		}
+		.carousel .arrow{
+			position: absolute;
+			top: 50%;
+			margin-top: -15px;
+			display: inline-block;
+			width: 30px;
+			height: 30px;
+			border-radius: 50%;
+			border: 1px solid #fff;
+			line-height: 30px;
+			color: #fff;
+			text-align: center;
+			text-decoration: none;
+		}
+		.carousel .arrow:hover{
+			opacity: 0.8;
+		}
+		.carousel .pre{
+			left: 10px;
+		}
+		.carousel .next{
+			right: 10px;
+		}
+		.carousel .bullet{
+			position: absolute;
+			bottom: 10px;
+			/*left: 50%;*/
+			/*margin-left: -100px;*/
+			width: 100%;
+			/*height: 10px;*/
+			/*background-color: red;*/
+			z-index: 1;
+			text-align: center;
+			font-size: 0; /*解决inline-block存留缝隙问题*/
+		}
+		.carousel .bullet>li{
+			/*float: left;*/
+			display: inline-block;
+			width: 30px;
+			height: 5px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			cursor: pointer;
+			margin: 0 3px;
+		}
+		.carousel .bullet>li.active{
+			background-color: #ccc;
+		}
+	</style>
+</head>
+<body>
+	
+	<div class="carousel">
+		<ul class="img-ct">
+			<li data-id=0><a href='#'><img src='http://cdn.jirengu.com/book.jirengu.com/img/2.jpg' /></a></li>
+			<li data-id=1><a href='#'><img src='http://cdn.jirengu.com/book.jirengu.com/img/3.jpg' /></a></li>
+			<li data-id=2><a href='#'><img src='http://cdn.jirengu.com/book.jirengu.com/img/4.jpg' /></a></li>
+			<li data-id=3><a href='#'><img src='http://cdn.jirengu.com/book.jirengu.com/img/5.jpg' /></a></li>
+		</ul>
+		<a href="#" class="pre arrow"><</a>
+		<a href="#" class="next arrow">></a>
+		<ul class="bullet">
+			<li class="active"></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</div>
+
+
+	<script type="text/javascript">
+	/*
+	如果js内容放在<head>里面，要写document.ready（表示所有DOM节点加载完以后再加载）下面是它的简写，如果js内容放在<body>底部，就不需要写了。
+		$(function(){
+
+		})
+
+		*/
+
+		/*
+		1.得到图片的长度和宽度
+		2.初始化(克隆第一个和最后一个图片)
+		*/
+
+		var $imgCt = $('.img-ct')
+		var $imgs = $('.carousel .img-ct>li')
+		var $preBtn = $('.carousel .pre')
+		var $nextBtn = $('.carousel .next')
+		var $bullets = $('.carousel .bullet li')
+
+		var pageIndex = 0 //这个变量表示它当前在第几页上
+		var isAnimate = false
+
+		var imgCount = $imgs.length
+		var imgWidth = $imgs.width()
+		$imgCt.append($imgs.first().clone())  //把第一个clone一份放到图片最后
+		$imgCt.prepend($imgs.last().clone()) //把最后一个clone一份放到最前面
+		$imgCt.width((imgCount + 2) * imgWidth)  //用户看到的是clone的第三张图片
+		 $imgCt.css({left: -imgWidth}) //让用户看到第一张图片
+
+		 //绑定事件
+		 //当点击下一个按钮时，让它展示下一页
+		 $nextBtn.click(function(){
+		 	playNext(1)
+		 })
+		 //当点击上一个按钮时，让它展示上一页
+		 $preBtn.click(function(){
+		 	playPre(1)
+		 })
+
+		 $bullets.click(function(){
+		 	var index = $(this).index()  //指点的第几个
+		 	console.log(index)
+		 	if(index > pageIndex){
+		 		playNext(index - pageIndex)
+		 	}else if(index < pageIndex){
+		 		playPre(pageIndex - index)
+		 	}
+		 	
+		 })
+
+
+		 //点击到下一页让它去做什么？
+
+		 function playNext(len) {
+		 	console.log('playNext', len)
+		 	if(isAnimate) return;
+		 	isAnimate = true
+		 	$imgCt.animate({
+		 		left: '-='+imgWidth   //向左偏移一格(-=是在原来的基础上再去减小这么一个值)
+		 	}, function(){
+		 		pageIndex += len
+		 		if(pageIndex === imgCount){
+		 			pageIndex = 0
+		 			$imgCt.css({left: -imgWidth})
+		 		}
+		 		console.log(pageIndex)
+		 		setBullet()
+		 		isAnimate = false
+		 	})
+		 }
+
+
+		  function playPre(len) {
+		 	$imgCt.animate({
+		 		left: '+='+imgWidth   //向右偏移一格(+=是在原来的基础上再去增加这么一个值)
+		 	},function(){
+		 		pageIndex -= len
+		 		if(pageIndex < 0){
+		 			pageIndex = imgCount - 1
+		 			$imgCt.css({left: -imgCount*imgWidth})
+		 		}
+		 		setBullet()
+		 	})
+		 }
+
+		 function setBullet(){
+		 	$bullets.removeClass('active')
+		 	.eq(pageIndex)
+		 	.addClass('active')
+		 }
+
+
+
+
+
+
+//也可以做一个自动轮播 只需要一个setInterval(function(){playNext(1)}, 2000)
+
+
+	</script>
+	
+</body>
+</html>

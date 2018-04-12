@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src='http://kejian.jirengu.com/static/js/jquery-1.11.1.min.js'></script>
+
+	<meta charset="UTF-8">
+	<title>图片懒加载-简单</title>
+	<style type="text/css">
+		ul,li{
+			list-style:none;
+		}
+		.container{
+			width: 600px;
+			margin: 0 auto;
+		}
+		.container li{
+			float: left;
+			margin: 10px 10px;
+		}
+		.container li img{
+			width: 240px;
+			height: 180px;
+		}
+		p{
+			float: left;
+		}
+	</style>
+</head>
+<body>
+
+<!-- 学习什么：
+1.学会通过一个效果去分析它的功能，然后把分析过程用代码去实现；
+2.在实现效果的基础上，尝试改变代码风格，去封装我们的代码
+	 -->
+
+	<ul class="container">
+		<li><a href="#"><img src="" data-src='http://cdn.jirengu.com/book.jirengu.com/img/1.jpg'></a></li>
+	</ul>
+
+
+
+
+	<script type="text/javascript">
+		
+		/*
+
+		1.对于所有的 img 标签, 把真实的地址放入自定义属性data-img
+		2. 当滚动页面时, 检查页面所有的 img 标签,看看这个标签是否出现到我们的视野,当出现在我们的视野时,再去判断它是否已经加载过,如果没有加载过,加载它
+
+
+		*/
+
+		lazyRender()
+
+		var clock
+		$(window).on('scroll', function(){
+			// $('.container img').each(function(){
+			// 	if(checkShow($(this)) && !isLoaded($(this)) ){
+			// 		loadImg($this)
+			// 	}
+			// })
+			if(clock){
+				clearTimeout(clock)
+			}
+			clock = setTimeout(function(){
+				console.log('hello')
+				lazyRender()
+			}, 300)
+			
+		})
+
+
+		function lazyRender() {
+			$('.container img').each(function(){
+				if(checkShow($(this)) && !isLoaded($(this)) ){
+					loadImg($this)
+				}
+			})
+
+		}
+
+
+
+		function checkShow($img) {
+			var scrollTop = $(window).scrollTop()
+			var windowHeight = $(window).height()
+			var offsetTop = $img.offfset().top
+
+			if(offsetTop < scrollTop + windowHeight && offSetTop > scrollTop) {
+				return true
+			}
+			return false
+
+		}
+
+		function isLoaded($img) {
+			return $img.attr('data-src') === $img.attr('src')
+
+		}
+
+		function loadImg($img) {
+			$img.attr('src', $img.attr('data-src'))
+
+		}
+
+
+
+	</script>
+
+
+</body>
+</html>
